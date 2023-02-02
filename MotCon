@@ -1,0 +1,32 @@
+#include "mbed.h"
+#include "MotCon.h"
+//declare the necessary motor objects and their pin #’s
+
+
+//define a character variable to read from the keyboard
+
+
+//define a float variable for the duty cycle
+
+
+// start the main program
+int main()
+{
+    printf("hello"); //check program is running
+    //initialize the duty cycle of both motors to 0.0
+    
+    //infinite while loop to test your code 
+    while(true){
+        //scan the character entered from the keyboard and assign it to your character variable
+        
+        //create logic for determining what each motor should do based on what key is entered.
+        //it is helpful for troubleshooting purposes if you also print out what you expect the motor to do, for example: printf("yawing left")
+
+        //yaw Counter Clockwise
+        
+        //yaw clockwise
+        
+        //pitch up
+   //stop all motors
+    }  //close while loop
+}//close main
