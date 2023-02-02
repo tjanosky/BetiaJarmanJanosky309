@@ -19,7 +19,7 @@ int main()
     //infinite while loop to test your code 
     while(true){
         //scan the character entered from the keyboard and assign it to your character variable
-        scanf("%s", &keyboard);
+        scanf("%c", &keyboard);
         //create logic for determining what each motor should do based on what key is entered.
         //it is helpful for troubleshooting purposes if you also print out what you expect the motor to do, for example: printf("yawing left")
 
