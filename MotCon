@@ -31,11 +31,13 @@ int main()
 
        if (keyboard == 'a') {
             printf("Counterclockwise Yaw");
+            yaw.mot_control(yawduty);
         }
 
         //yaw clockwise
          if (keyboard == 'd') {
             printf("Clockwise Yaw");
+            yaw.mot_control(yawduty);
         }
         //pitch up
         if (keyboard == 'w'){
