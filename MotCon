@@ -1,7 +1,8 @@
 #include "mbed.h"
 #include "MotCon.h"
 //declare the necessary motor objects and their pin #’s
-
+MotCon yaw(p26, p29, p30);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
+MotCon pitch(p26, p29, p30);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
 
 //define a character variable to read from the keyboard
 
