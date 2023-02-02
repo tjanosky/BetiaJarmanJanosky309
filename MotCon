@@ -5,7 +5,7 @@ MotCon yaw(A1, A0, A2);   //uses p26 for pwm and p29 and 30 for direction (compl
 MotCon pitch(A5, A3, A4);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
 
 //define a character variable to read from the keyboard
-
+char keyboard
 
 //define a float variable for the duty cycle
 
@@ -19,15 +19,30 @@ int main()
     //infinite while loop to test your code 
     while(true){
         //scan the character entered from the keyboard and assign it to your character variable
-        
+        scanf("%s", &keyboard);
         //create logic for determining what each motor should do based on what key is entered.
         //it is helpful for troubleshooting purposes if you also print out what you expect the motor to do, for example: printf("yawing left")
 
-        //yaw Counter Clockwise
-        
+       if (keyboard == 'a') {
+            printf("Counterclockwise Yaw");
+        }
+
         //yaw clockwise
-        
+         if (keyboard == 'd') {
+            printf("Clockwise Yaw");
+        }
         //pitch up
+        if (keyboard == 'w'){
+            printf("Tilt Up")
+
+        }
+        //pitch down
+          if (keyboard == 's') {
+            printf("Tilt Down");
    //stop all motors
+       if (keyboard == 'q') {
+            printf("Stop both motors");
+        }
+
     }  //close while loop
 }//close main
