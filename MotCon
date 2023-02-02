@@ -1,11 +1,11 @@
 #include "mbed.h"
 #include "MotCon.h"
 //declare the necessary motor objects and their pin #’s
-MotCon yaw(A1, A0, A2);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
-MotCon pitch(A5, A3, A4);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
+MotCon pitch(A1, A0, A2);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
+MotCon yaw(A5, A3, A4);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
 
 //define a character variable to read from the keyboard
-char ch[];
+char ch;
 //define a float variable for the duty cycle
 float yaw_DC = 0.5;
 float pitch_DC = 0.5;
@@ -20,20 +20,24 @@ int main()
             scanf("%c", &ch); //scan the character entered from the keyboard and assign it to your character variable
             if (ch =='a') 
             {
-                yaw.mot_control(-yaw_DC)
+                yaw.mot_control(-yaw_DC);
+            }
+            if (ch == 'd')
+            {
+                yaw.mot_control(yaw_DC);
             }
             if (ch =='w')
             {
-                pitch.mot_control(pitch_DC)
+                pitch.mot_control(pitch_DC);
             }
             if (ch =='s')
             {
-                pitch.mot_control(-pitch_DC)
+                pitch.mot_control(-pitch_DC);
             }
             if (ch =='q')
             {
-                yaw.mot_control = 0.0;
-                pitch.mot_control = 0.0;
+                yaw.mot_control(0.0);
+                pitch.mot_control(0.0);
             }
         //create logic for determining what each motor should do based on what key is entered.
         //it is helpful for troubleshooting purposes if you also print out what you expect the motor to do, for example: printf("yawing left")
