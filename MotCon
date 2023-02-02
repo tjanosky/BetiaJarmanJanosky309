@@ -8,6 +8,9 @@ MotCon pitch(A5, A3, A4);   //uses p26 for pwm and p29 and 30 for direction (com
 char keyboard
 
 //define a float variable for the duty cycle
+float tiltduty;
+float yawduty; 
+
 
 
 // start the main program
@@ -15,6 +18,9 @@ int main()
 {
     printf("hello"); //check program is running
     //initialize the duty cycle of both motors to 0.0
+    
+     tiltduty = 0.0;
+    yawduty = 0.0;
     
     //infinite while loop to test your code 
     while(true){
