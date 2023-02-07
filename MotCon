@@ -18,25 +18,25 @@ int main()
     while(true){
             printf("Press a key: \n");
             scanf("%c", &ch); //scan the character entered from the keyboard and assign it to your character variable
-            if (ch =='a') 
+           if (ch =='a') 
             {
-                yaw.mot_control(-yaw_DC);
+                yaw.mot_control(-yaw_DC);  //CCW yaw
             }
             if (ch == 'd')
             {
-                yaw.mot_control(yaw_DC);
+                yaw.mot_control(yaw_DC);  //Clockwise yaw
             }
             if (ch =='w')
             {
-                pitch.mot_control(pitch_DC);
+                pitch.mot_control(-pitch_DC); //Up pitch
             }
             if (ch =='s')
             {
-                pitch.mot_control(-pitch_DC);
+                pitch.mot_control(pitch_DC); // Down pitch
             }
-            if (ch =='q')
+            if (ch =='q') 
             {
-                yaw.mot_control(0.0);
+                yaw.mot_control(0.0);   
                 pitch.mot_control(0.0);
             }
         //create logic for determining what each motor should do based on what key is entered.
