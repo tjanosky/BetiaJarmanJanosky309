@@ -19,8 +19,8 @@ float yaw_DC = 0.5;
 float pitch_DC = 0.5;
 
 
-function wrapToPi(ang)
-
+float wrapToPi(ang)
+{
 while(ang > pi)
 ang = ang – 2*pi
 
@@ -28,7 +28,7 @@ while(ang < -pi)
 ang = ang + 2*pi
 
 return ang
-
+}
 
 int main()
 {
