@@ -1,5 +1,6 @@
 #include "mbed.h"
 #include "MotCon.h"
+#include "BNO055/BNO055.h"
 
 //declare ticker and timer
 Ticker mytick 
