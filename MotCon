@@ -1,52 +1,44 @@
 #include "mbed.h"
 #include "MotCon.h"
+// Blinking rate in milliseconds
 //declare the necessary motor objects and their pin #’s
-MotCon pitch(A1, A0, A2);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
-MotCon yaw(A5, A3, A4);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
+MotCon pitch_motor(A1, A0, A2);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
+MotCon yaw_motor(A5, A3, A4);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
 
-//define a character variable to read from the keyboard
-char ch;
-//define a float variable for the duty cycle
-float yaw_DC = 0.5;
-float pitch_DC = 0.5;
-
+char ch; //define a character variable to read from the keyboard
+float yaw_DC = 0.5; //define a float variable for the duty cycle
+float pitch_DC = 0.5; //define a float variable for the duty cycle
+    
 // start the main program
 int main()
 {
 
-    //infinite while loop to test your code 
     while(true){
-            printf("Press a key: \n");
+            printf("Press a key:\n");
             scanf("%c", &ch); //scan the character entered from the keyboard and assign it to your character variable
-           if (ch =='a') 
+            
+            if (ch =='a') 
             {
-                yaw.mot_control(-yaw_DC);  //CCW yaw
+                yaw_motor.mot_control(-yaw_DC);  //CCW yaw
+                
             }
             if (ch == 'd')
             {
-                yaw.mot_control(yaw_DC);  //Clockwise yaw
+                yaw_motor.mot_control(yaw_DC);  //Clockwise yaw
             }
             if (ch =='w')
             {
-                pitch.mot_control(-pitch_DC); //Up pitch
+                pitch_motor.mot_control(-pitch_DC); //Up pitch
             }
             if (ch =='s')
             {
-                pitch.mot_control(pitch_DC); // Down pitch
+                pitch_motor.mot_control(pitch_DC); // Down pitch
             }
-            if (ch =='q') 
+            if (ch =='q') //stop all motors
             {
-                yaw.mot_control(0.0);   
-                pitch.mot_control(0.0);
+                yaw_motor.mot_control(0.0);   
+                pitch_motor.mot_control(0.0);
             }
-        //create logic for determining what each motor should do based on what key is entered.
-        //it is helpful for troubleshooting purposes if you also print out what you expect the motor to do, for example: printf("yawing left")
-
-        //yaw Counter Clockwise
-        
-        //yaw clockwise
-        
-        //pitch up
-   //stop all motors
+    
     }  //close while loop
 }//close main
