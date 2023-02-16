@@ -1,0 +1,54 @@
+#include "mbed.h"
+#include "MotCon.h"
+
+//declare ticker and timer
+Ticker mytick 
+Timer t
+
+// declare variables
+float yaw_vec[], pitch[], ttime_vec[], yaw, pitch;
+int i; 
+
+
+
+int main() {
+
+t.start // start timer 
+
+// reset + calibrate IMU, initialize motors
+imu.get_angles();
+imu.get_gyro();
+
+yaw = imu.euler.yaw;
+pitch = imu.euler.yaw; 
+
+// begin ticker 
+mytick.attatch(&myfunc, 10); 
+
+while(t.read()<=4.0) { //some condition 
+    imu.get_angles();
+    imu.get_gyro();
+    printf("%f,%f,%f,%f\n\r",imu.euler.pitch,imu.euler.yaw, imu.gyro.y,imu.gyro.z);
+} // end while 
+
+ mytick.detach(); //end ticker
+
+for (i = 0; i < 400; i++){
+//print out arrays 
+printf("%f, %f, %f \n\r", ttimee[i], yaw_vec[i], pitch_vec[i]);
+
+} //end for
+
+} // end main
+
+
+//ticker function
+void myfunc(){ 
+//store data in arrays
+//compute control law
+yaw_vec[i] = yaw;
+ttime_vec[i] = t.read;
+
+} //end myfunc
+
+
