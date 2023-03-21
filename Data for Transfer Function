@@ -31,37 +31,31 @@ int main()
     imu.set_angle_units(RADIANS); // Set Angle Units to radians
     imu.set_anglerate_units(RAD_PER_SEC); //Set Gyro units to rad/s
     //infinite while loop to test your code 
-    //while(true)
-    //{
-            //ThisThread::sleep_for(5000);       
-            //t.start();
-            //yaw_motor.mot_control(yaw_DC);  //Clockwise yaw
-            //imu.get_angles();
-            //imu.get_gyro();
-            //float yaw = imu.euler.yaw;
-            //float converted_yaw = wrapToPi(yaw);         
-            //printf("%f,%f,%f,%f,%f,%.2f\n\r",imu.euler.pitch,imu.euler.yaw,converted_yaw,imu.gyro.y,imu.gyro.z,t.read());   
-        
-    //}  //close while loop
-     while(t.read()<= 4.0)
-     {
-         t.start();
-            yaw_motor.mot_control(yaw_DC);  //Clockwise yaw
+    
+    t.start();
+    while(t.read() <= 3.0)
+    {
+        pitch_DC = 0.0;
+        pitch_motor.mot_control(pitch_DC); 
+        imu.get_angles();
+        imu.get_gyro();
+        float yaw = imu.euler.yaw;
+        float converted_yaw = wrapToPi(yaw);         
+        printf("%.2f,%.2f,%.5f\n\r",converted_yaw,imu.gyro.y,t.read());
+    }
+    while(t.read()> 3.0 & t.read()<= 7.0)
+    {    
+            pitch_DC = 0.5;         
+            pitch_motor.mot_control(pitch_DC);  //pitch down
             imu.get_angles();
             imu.get_gyro();
             float yaw = imu.euler.yaw;
             float converted_yaw = wrapToPi(yaw);         
-            printf("%.2f,%.2f,%.2f\n\r",converted_yaw,imu.gyro.z,t.read());
-     }
-     //while(t.read()<= 4.0)
-     //{
-         //t.start();
-            //yaw_motor.mot_control(-yaw_DC);  //CCW Yaw
-            //imu.get_angles();
-            //imu.get_gyro();
-            //float yaw = imu.euler.yaw;
-            //float converted_yaw = wrapToPi(yaw);         
-            //printf("%.2f,%.2f,%.2f\n\r",converted_yaw,imu.gyro.z,t.read());
-     //}
+            printf("%.2f,%.2f,%.5f\n\r",converted_yaw,imu.gyro.y,t.read());   
+    } //close while loop
+
 }//close main
+
+
+
 
