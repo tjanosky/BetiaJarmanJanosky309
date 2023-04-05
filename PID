@@ -1,0 +1,96 @@
+// Include necessary libraries
+#include "mbed.h"
+#include "MotCon.h"
+#include "BNO055.h"
+
+// Declare objects (if necessary)
+Ticker Controller; // declare Ticker object named "Controller"
+//static BufferedSerial pc(USBTX, USBRX); // tx, rx for serial USB interface to pc
+Timer t; // create timer instance
+MotCon pitch_motor(A1, A2, A0);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
+MotCon yaw_motor(A5, A3, A4);   //uses p26 for pwm and p29 and 30 for direction (complimentary)
+BNO055 imu(D0,D1);
+
+
+// variables for data handling and storage
+float TotalTime;        // Total run time
+float Time;             // Current elapsed time
+float Ts = 0.002;       // Control update period (seconds) (500 Hz equivalent)
+float Tstrm = 0.004;    // Approximate data streaming period (seconds) (200 Hz equivalent)
+float yaw;              // variable for yaw position
+float pitch;            // variable for pitch position
+float speed_yaw;        
+float speed_pitch;      
+float converted_yaw;    
+float Vol;              // user-specified step input magnitude (scaled between [-1,1])
+float inptVltge;        // signal sent to the motor
+float v0 = 0.3;               // Deadzone voltage               
+float err;              // Error (speed for p-control)
+float des_speed;        // Des Speed
+float pi = 3.14159265359;       
+float des_pos = pi/2;          // Desired position for PI Lead controller
+float Ki = 33.6118;               //PI Lead Gain 1
+float Kp = 12.7063;               //PI Lead Gain 2
+float Kd = 0.73077;               //PI Lead Gain       
+float err_prev = 0.0;       //Aged error for PI Controller
+float err_prev2;
+float inptVltge_prev;   //Aged input voltage for PI Controller
+float inptVltge_prev2;
+
+
+float wrapToPi(float yaw)
+{
+    while(yaw > pi)
+    yaw = (yaw - 2*pi);
+
+    while(yaw < -pi)
+    yaw = (yaw + 2*pi);
+
+    return yaw;
+    }
+
+
+// Enter main function
+int main ()
+{
+    imu.reset();
+    imu.setmode(OPERATION_MODE_IMUPLUS); //Set Mode to IMU with relative Heading
+    imu.set_angle_units(RADIANS); // Set Angle Units to radians
+    imu.set_anglerate_units(RAD_PER_SEC); //Set Gyro units to rad/s
+    //pc.baud(115200); // increase baud rate to speed up print messages
+    t.start();
+    while(t.read()<=10.0) { // repeat indefinitely
+
+        // perform necessary functions to time the experiment
+         // reset timer object
+        imu.get_angles();
+        imu.get_gyro();
+        speed_yaw = imu.gyro.y;
+        speed_pitch = imu.gyro.z;
+        yaw = imu.euler.yaw;
+        pitch = imu.euler.pitch;
+
+        // Only allow experiment to run for 1 second max (to avoid overflow of log variables)
+        
+        converted_yaw = wrapToPi(yaw);
+         // start measuring elapsed time
+        err = wrapToPi(des_pos) - converted_yaw;
+        inptVltge = Ki*(t.read()*err + err_prev) + Kp*err + Kd*((err-err_prev)/t.read());
+        yaw_motor.mot_control(inptVltge + v0);
+        err_prev = err;
+
+        // Attach the stepInput function to ticker object specified with period Ts
+        /*Controller.attach(&CL_PILead_PosCtrl,Ts); //(Final Project) close-loop PI Lead position control
+        thread_sleep_for(TotalTime); // wait in main program for experiment to finish
+
+        Controller.detach(); / detach ticker to turn off controller*/
+
+        // Turn motor off at end of experiment
+        //pitch_motor.mot_control(0.0);
+   	    //yaw_motor.mot_control(0.0);
+
+        // stream data from experiment across serial port
+        //Time0 = etime[0];
+    }// end while(1)
+    yaw_motor.mot_control(0.0);
+}// end main
